@@ -35,7 +35,7 @@ const LeftSidebar = () => {
                 <p className='h3-bold'>
                     {user.name}
                 </p>
-                <p className='small-regular text-light-2'>
+                <p className='small-regular text-dark-2'>
                     @{user.username}
                 </p>
              </div>
@@ -46,7 +46,7 @@ const LeftSidebar = () => {
 
                     return(
                         <li key={link.label}  className={`leftsidebar-link group ${
-                            isActive && 'bg-primary-500'
+                            isActive && 'bg-yellow-700'
                         }`}>
                         <NavLink
                             to={link.route}

@@ -9,22 +9,19 @@ import { Link, useParams } from "react-router-dom";
 
 
 const Profile = () => {
-  const { data: posts, isPending: isPostLoading, isError: isErrorPosts} = useGetRecentPosts();
+  const { data: posts, isPending: isPostLoading} = useGetRecentPosts();
   const { id } = useParams();
-  const { data: userPost, isPending: isUserPostLoading } = useGetPostById(id || '');
+  const { isPending: isUserPostLoading } = useGetPostById(id || '');
   const { user } = useUserContext();
 
-  const { data: allPosts, isPending: isAllPostsLoading, isError: isErrorAllPosts } = useGetRecentPosts();
+  const { data: allPosts, isPending: isAllPostsLoading } = useGetRecentPosts();
 
-  const handleDeletePost = () => {
-    // Add your logic for deleting the post
-  };
 
   // Filter posts to show only the current user's posts
   const userPosts = allPosts?.documents.filter(post => post.creatorId === user.id);
 
   return (
-    <div className="profile-container">
+    <div className="profile-container text-dark-1">
       {isUserPostLoading || isAllPostsLoading ? (
         <Loader />
       ) : (

@@ -1,18 +1,16 @@
 import GridPostList from '@/components/shared/GridPostList';
 import Loader from '@/components/shared/Loader';
 import SearchResults from '@/components/shared/SearchResults';
-import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button';
 import useDebounce from '@/hooks/useDebounce';
 import { useGetPosts, useSearchPosts } from '@/lib/react-query/queriesAndMutations';
 import { useState, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer';
-import { Models } from 'appwrite';
-
 const YourCart = () => {
   const { ref, inView } = useInView();
 
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue] = useState("");
 
   const deBouncedValue = useDebounce(searchValue, 500);
 
@@ -21,22 +19,25 @@ const YourCart = () => {
 
   useEffect(() => {
     if (inView && !searchValue) fetchNextPage();
-  }, [inView, searchValue])
+  }, [inView, searchValue]);
 
   if (!posts) {
     return (
       <div className='flex-center w-full h-full'>
         <Loader />
       </div>
-    )
+    );
   }
 
   const shouldShowSearchResults = searchValue !== '';
-  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item) => item.documents.length === 0)
-return (
-    <div className='explore-container'>
+  const shouldShowPosts =
+    !shouldShowSearchResults &&
+    posts.pages.every((item) => item?.documents.length === 0);
+
+  return (
+    <div className='explore-container text-center'>
       <div className='explore-inner_container'>
-        <h2 className='h3-bold md:h2-bold w-full'>Your Cart</h2>
+        <h2 className='h3-bold md:h2-bold w-full '>Your Cart</h2>
         <div className='flex gap-2 px-8 w-full rounded-lg bg-dark-4'>
           {/* ... (previous code) */}
         </div>
@@ -56,10 +57,10 @@ return (
         ) : shouldShowPosts ? (
           <p className='text-light-4 mt-10 text-center w-full'>End of posts</p>
         ) : (
-          posts.pages.map((item, index) => (
+          posts.pages.map((item: { documents: any; }, index: any) => (
             <GridPostList
               key={`page-${index}`}
-              posts={item?.documents || []} // Add a check here
+              posts={item?.documents ?? []} // Nullish coalescing operator
             />
           ))
         )}
@@ -70,8 +71,11 @@ return (
           <Loader />
         </div>
       )}
+      <div>
+        <Button>Sample</Button>
+      </div>
     </div>
   );
-}
+};
 
 export default YourCart;

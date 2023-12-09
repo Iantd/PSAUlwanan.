@@ -1,5 +1,4 @@
 import React, { useState, useEffect  } from 'react';
-import { useUserContext } from '@/context/AuthContext';
 import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from '@/lib/react-query/queriesAndMutations';
 import { Models } from 'appwrite'
 import { checkIsLiked } from '@/lib/utils';
@@ -50,15 +49,15 @@ const PostStats =  ({ post, userId }: PostStatsProps) => {
 
   const handleSavePost = (e: React.MouseEvent) => {
     e.stopPropagation();
-
+  
     if (savedPostRecord) {
-        setIsSaved(false);
-        deleteSavedPost(savedPostRecord.$id);
+      setIsSaved(false);
+      deleteSavedPost(savedPostRecord.$id);
     } else {
-    savePost({ postId: post?.$id || '', userId });
-    setIsSaved(true); 
+      savePost({ postId: post?.$id || '', userId: [userId] });
+      setIsSaved(true);
     }
-  }
+  };
 
 
 
