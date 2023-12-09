@@ -21,7 +21,7 @@ import { useUserContext } from "@/context/AuthContext"
 
 const SigninForm = () => {     
   const { toast } = useToast();
-  const { checkAuthUser, isLoading, isUserLoading } = useUserContext();
+  const { checkAuthUser, isLoading, } = useUserContext();
   const navigate = useNavigate();
 
   const { mutateAsync: signInAccount} = useSignInAccount();
@@ -95,7 +95,7 @@ const SigninForm = () => {
               )}
             />
             <Button type="submit" className="shad-button_primary">
-              { isUserLoading ? (
+              { isLoading ? (
                 <div className="flex-center gap-2">
                   <Loader />Loading...
                 </div>
