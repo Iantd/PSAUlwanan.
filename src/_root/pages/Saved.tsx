@@ -6,6 +6,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { useGetPosts, useSearchPosts } from '@/lib/react-query/queriesAndMutations';
 import { useState, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer';
+import { Models } from 'appwrite';
 
 const YourCart = () => {
   const { ref, inView } = useInView();
@@ -16,14 +17,14 @@ const YourCart = () => {
   const deBouncedValue = useDebounce(searchValue, 500);
 
   const { data: searchedPosts, isFetching: isSearchFetching } =
-  useSearchPosts(deBouncedValue)
+    useSearchPosts(deBouncedValue);
 
   useEffect(() => {
-    if(inView && !searchValue) fetchNextPage();
+    if (inView && !searchValue) fetchNextPage();
   }, [inView, searchValue])
 
-  if(!posts){
-    return(
+  if (!posts) {
+    return (
       <div className='flex-center w-full h-full'>
         <Loader />
       </div>
@@ -31,49 +32,37 @@ const YourCart = () => {
   }
 
   const shouldShowSearchResults = searchValue !== '';
-  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every
-  ((item) => item.documents.length === 0)
-
-  return (
+  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item) => item.documents.length === 0)
+return (
     <div className='explore-container'>
-      <div className='explore-inner_container'>        
+      <div className='explore-inner_container'>
         <h2 className='h3-bold md:h2-bold w-full'>Your Cart</h2>
         <div className='flex gap-2 px-8 w-full rounded-lg bg-dark-4'>
-          {/* <img 
-          src="/assets/icons/search.svg" 
-          alt="search"
-          width={24}
-          height={24} />
-          <Input 
-          type='text'
-          placeholder='Search'
-          className='explore-search'
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          /> */}
+          {/* ... (previous code) */}
         </div>
       </div>
 
       <div className='flex-between w-5xl mt-16 mb-10'>
-       <h3 className='body-bold md:h3-bold'>List of your Orders</h3>
-
-       {/* <div className='flex-center gap-3 bg-dark-3 rounded-xl px-4
-       py-2 cursor-pointer'>
-       
-       </div> */}
+        <h3 className='body-bold md:h3-bold'>List of your Orders</h3>
+        {/* ... (previous code) */}
       </div>
 
       <div className='flex flex-wrap flex-1 gap-9 w-full'>
-        {shouldShowSearchResults? (
+        {shouldShowSearchResults ? (
           <SearchResults
             isSearchFetching={isSearchFetching}
-            searchedPosts={searchedPosts}
+            searchedPosts={searchedPosts?.documents || []}
           />
-        ): shouldShowPosts? (
+        ) : shouldShowPosts ? (
           <p className='text-light-4 mt-10 text-center w-full'>End of posts</p>
-        ): posts.pages.map((item, index) => (
-          <GridPostList key={`page-${index}`} posts={item.documents}/>
-        ))}
+        ) : (
+          posts.pages.map((item, index) => (
+            <GridPostList
+              key={`page-${index}`}
+              posts={item?.documents || []} // Add a check here
+            />
+          ))
+        )}
       </div>
 
       {hasNextPage && !searchValue && (
@@ -82,7 +71,7 @@ const YourCart = () => {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default YourCart
+export default YourCart;

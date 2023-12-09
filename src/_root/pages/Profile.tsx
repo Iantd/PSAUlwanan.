@@ -43,7 +43,7 @@ const Profile = () => {
             </p>
             <div className="profile-stats flex items-center gap-10 mt-3">
               <span>{user.postsCount || 0} posts</span>
-              <span>{user.followersCount || 0} followers</span>
+              <span>{user.followersCount || 0} followers </span>
               <span>{user.followingCount || 0} following</span>
             </div>
           </div>

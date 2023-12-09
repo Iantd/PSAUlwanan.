@@ -41,6 +41,9 @@ export type INavLink = {
   };
   
   export type IUser = {
+    followingCount: number;
+    followersCount: number;
+    postsCount: number;
     id: string;
     name: string;
     username: string;
