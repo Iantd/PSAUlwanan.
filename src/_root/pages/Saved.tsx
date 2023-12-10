@@ -71,8 +71,8 @@ const YourCart = () => {
           <Loader />
         </div>
       )}
-      <div>
-        <Button>Sample</Button>
+      <div >
+        <Button type="submit" className="shad-button_primary">Proceed to Check Out</Button>
       </div>
     </div>
   );

@@ -14,3 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </QueryProvider>
     </BrowserRouter>
 )
+//serves as the entry point for rendering your React application using ReactDOM. 
+// root rendering of a React application using ReactDOM. It includes the necessary 
+// providers for context (authentication and query), integrates React Router for navigation, 
+// and renders the main application component (App) into the root element of the HTML document.

@@ -35,3 +35,7 @@ const App = () => {
 }
 
 export default App
+
+// main application component (App) responsible for setting up the routing structure using React Router. It organizes the application
+//  into public and private routes, each associated with different layouts. Additionally, it includes components for 
+// various pages, forms, and global styles. The <Toaster /> component is included for handling notifications in the application.
